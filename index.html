@@ -40,10 +40,10 @@
     </div>
 
     <script>
+        // تم إصلاح وتنظيف الرابط هنا بحذف /rest/v1/ من آخره ليعمل الاتصال فوراً
         const SUPABASE_URL = "https://hzyuvrsbljudvcvntqqb.supabase.co";
         const SUPABASE_ANON_KEY = "sb_publishable_kRchQEBcrFnFh8ciYKskuA_BdOESOPH";
         
-        // إعداد الاتصال مع تفعيل حفظ الجلسة محلياً ليتعرف المتصفح على الدخول فوراً
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
             auth: {
                 persistSession: true,
@@ -73,8 +73,8 @@
             const password = document.getElementById('password').value;
             if(!email || !password) return alert('الرجاء تعبئة الحقول');
             const { data, error } = await supabase.auth.signUp({ email, password });
-            if (error) alert(error.message);
-            else alert('تم التسجيل بنجاح! اضغط الآن على دخول.');
+            if (error) alert("خطأ في التسجيل: " + error.message);
+            else alert('تم التسجيل بنجاح! اضغط الآن على دخول للولوج إلى حسابك.');
         }
 
         async function login() {
@@ -85,7 +85,6 @@
             if (error) {
                 alert("خطأ في الدخول: " + error.message);
             } else {
-                // تحديث الواجهة يدوياً فوراً عند نجاح العملية
                 authSection.classList.add('hidden');
                 appSection.classList.remove('hidden');
                 userDisplay.innerText = data.user.email;
